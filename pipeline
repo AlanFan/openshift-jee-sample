@@ -3,16 +3,12 @@ pipeline {
   stages {
     stage("Build WAR") {
       steps {
-        dir('mavenapp') {
-          sh 'mvn clean package -s settings.xml -Popenshift'
-        }
+        sh 'mvn clean package -s settings.xml -Popenshift'
       }
     }
     stage("Build Image") {
       steps {
-        dir('mavenapp/target') {
-          sh 'oc start-build mavenapp --from-dir . --follow'
-        }
+        sh 'oc start-build mavenapp --from-dir ./target --follow'
       }
     }
   }
